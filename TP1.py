@@ -9,9 +9,6 @@ import time
 A = np.random.random(size=(10,10))
 B = np.random.random(size=(10,1))
 
-#A = np.array([[1,1,1,1],[2,4,-3,2],[-1,-1,0,-3],[1,-1,4,9]])
-#B = np.array([[1],[1],[2],[-8]])
-
 #Fonctions...
 
 def ReductionGauss(Aaug):
@@ -95,6 +92,7 @@ def GaussChoixPivotPartiel(A,B):
         X[i] = (Aaug[i,n] - np.sum(Aaug[i,i+1:n]*X[i+1:n]))/Aaug[i,i]
 
     return X
+
 
 def GaussChoixPivotTotal(A,B):
 
