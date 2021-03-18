@@ -96,7 +96,6 @@ def GaussChoixPivotPartiel(A,B):
 
     return X
 
-
 def GaussChoixPivotTotal(A,B):
 
     n,m = np.shape(A)
@@ -105,30 +104,33 @@ def GaussChoixPivotTotal(A,B):
     l = [0,0]
     c = [0,0]
 
+    imax = 0
     jmax = 0
-    kmax = 0
-    for i in range(0, n-1):
-        jmax = i
-        kmax = i
-        pivotmax= abs(A[jmax,kmax])
 
-        if i >= 1:
-            for k in range(i,n-1):
-                for j in range(i,n-1):
-                    if abs(A[j,k]) > pivotmax : 
+    for k in range(0, n-1):
+
+        imax = k
+        jmax = k
+        p = abs(A[imax,jmax])
+
+        if k >= 1:
+            for j in range(k,n-1):
+                for i in range(k,n-1):
+                    if abs(A[i,j]) > p : 
+                        imax = i
                         jmax = j
-                        kmax = k
-                        pivotmax = abs(A[jmax,kmax])
+                        p = abs(A[imax,jmax])
 
-            c[:] = A[:,i]
-            A[:,i] = A[:,kmax]
-            A[:,kmax] = c[:]
-            l[:] = A[i,:]
-            A[i,:] = A[jmax,:]
-            A[jmax,:] = l[:]
+            c[:] = A[:,k]
+            A[:,k] = A[:,jmax]
+            A[:,jmax] = c[:]
 
-        for k in range(i+1,n):
-            A[k, :] = A[k,:]-(A[k,i]/A[i,i])*A[i, :]
+            l[:] = A[k,:]
+            A[k,:] = A[imax,:]
+            A[imax,:] = l[:]
+
+        for j in range(k+1,n):
+            A[j,:] = A[j,:]-(A[j,k]/A[k,k])*A[k,:]
 
     Aaug = np.concatenate((A,B), axis = 1)
 
